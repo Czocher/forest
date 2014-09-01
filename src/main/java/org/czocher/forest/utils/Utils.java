@@ -11,4 +11,23 @@ public class Utils {
 		return TextureRegion.split(new Texture(Gdx.files.internal(filename)),
 				width, height);
 	}
+
+	public static float saturate(final float what, final float bywhat,
+			final float bound) {
+
+		if (bound > 0) {
+			if (what < bound) {
+				return what + bywhat * Gdx.graphics.getDeltaTime();
+			} else {
+				return bound;
+			}
+		} else {
+			if (what > bound) {
+				return what - bywhat * Gdx.graphics.getDeltaTime();
+			} else {
+				return bound;
+			}
+		}
+
+	}
 }

@@ -9,7 +9,9 @@ import org.czocher.forest.utils.OrthogonalTiledMapEntityRenderer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 
@@ -18,12 +20,14 @@ public class GameScreen implements Screen, InputProcessor {
 	private final MainGame game;
 	private final TiledMap tiledMap;
 	private final OrthogonalTiledMapEntityRenderer tiledMapRenderer;
+	private final OrthographicCamera camera;
 	private final Player player;
 
 	public GameScreen(final MainGame game) {
 		this.game = game;
+		this.camera = game.getCamera();
 
-		player = new Player(loadAnimation("cat.png", 32, 32), game);
+		player = new Player(loadAnimation("cat.png", 32, 32), this);
 
 		tiledMap = new TmxMapLoader().load("map.tmx");
 		tiledMapRenderer = new OrthogonalTiledMapEntityRenderer(tiledMap);
@@ -56,7 +60,7 @@ public class GameScreen implements Screen, InputProcessor {
 
 		game.getViewport().update();
 
-		tiledMapRenderer.setView(game.getCamera());
+		tiledMapRenderer.setView(camera);
 		tiledMapRenderer.render();
 
 		game.getCamera().position.y = player.getPosition().y;
@@ -126,6 +130,10 @@ public class GameScreen implements Screen, InputProcessor {
 			final int arg3) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	public Camera getCamera() {
+		return camera;
 	}
 
 }

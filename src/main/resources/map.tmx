@@ -10,7 +10,7 @@
  </layer>
  <layer name="grass" width="25" height="25">
   <data encoding="base64" compression="zlib">
-   eJztlW8KwjAMxUsFnQquKqzz7/ZNL+ARBK8y8LiC1/ENLISSdFutnzTwg9Il75WREKXSxRhUIPeI1Zp4ZGDB6Md4SG81CT0kndajABacGI+pVmoG5ppo4ZwDQ+7UW8fXcB7SO9pYQmcF1kSvwNmC0vOQfIz33RLa2EBnC3ZgDw7gCCpQMx6cTsmn/YMJf2ayL9T4vWTC6WxNTXyupA9uOp1HV12MR9cMcPkxvZx6Bhryj+/C3PWNy+iz+hQh7YY+dX3zuN1QB+rdm6qOPBfSbgj1VGiOYj0epB+eevgcSfvnrOS+HTpHrsaqYXPxK7vkBdDPEf4=
+   eJzlVTEOgzAMjKjUMpVMpJ3IBh/g/59A6ncwQyRk+RLiBBWJk26Kz+fBFxtTD0/iQOwYtb1ejC3xLfTXeKBZbUUP1Gfz6ImOOBZ69EKP4IHm0EDysezd7bjh2+B+HrzxPh/lvHcEz0x7gobvko2Xixqf8KnhkdJpPFIZkOo1u3zlDMyPf0+Ab8MR3dE66Tb4iD7MNCTqAtBtiO1UaY4kj2X3D/+a/Byh+zMZvLe5OQoaZ/JyceUc1cQKe6UO/w==
   </data>
  </layer>
  <layer name="tallgrass" width="25" height="25">
@@ -25,7 +25,7 @@
  </layer>
  <layer name="trees" width="25" height="25">
   <data encoding="base64" compression="zlib">
-   eJzt0sVOA1EYBtBpkfIiyAbZIJsWtmiCbApskDdEEzRBE/Q1cHc9bAmF0txJCOmfnN3M912Loig6SETRIUccc8IpZ5wTYi7kXHLFNTfccsd9oI4HOY888cwLr7x95CfDdCTkJCmhlDLKSVHxTUe3NfQE2mdxfp60s858cd6V7qiKampy3Feuf/OdWrl11NMQ6N19nka5TTTTElNHWm6GVtp+0dHu2w466Yppbb1y++hnIKaOrNxBhhjOo6OQdzMid5QxxmPax1+ZCfubZIppZpgNvOc5efMssMgSy4E7VuStssY6G2wG7tiSt80Ou+yx/8/fR3EKm3f6mzNy
+   eJzt00dPAlEUhuELFiyJAibYywZlo7IR3YBuTOyJZWPZKG5M/HcWSMSSgCWx/g27YO++7mbh4EDOjSw8yZNMwsz33TOAUkqd2pQ6wzkucIkrXOMGEpMkJ4Vb3OEeD3jEk1DHMzkveMUb3vGBz+98u0yHjRw78pCPAhTCgaI0HcOcYcTinsXklKDUkFfGdTmcQnu4yHGjwpDn4boSVUId1eTUoBZ1qEcDGtEk1GE2Qd516If37aW3GS3wmZzB7Fmr00puG9rh17RnB7kBdKJLU0eQ3BC60ZNBRz/3DmAQQ78812v4vC+DjlHuHcM4JjTtP0nuFKYxY6Ejm9/NLLlzCGNe0x4LhtxFzf+7dLNE9zJWsIoIosLnWSMvhnVsYBNbwh1x8hLYxg52sSfcsU/eAQ5xhGOc/OF39z+5O18P/jau
   </data>
  </layer>
 </map>
