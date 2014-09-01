@@ -7,7 +7,7 @@ public class Main {
 
 	public static void main(final String[] args) {
 		final LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		new LwjglApplication(new Example(), config);
+		config.title = "Into the Forest";
+		new LwjglApplication(new MainGame(), config);
 	}
-
 }
