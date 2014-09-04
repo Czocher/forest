@@ -1,10 +1,9 @@
 package org.czocher.forest.screens;
 
-import static org.czocher.forest.utils.Utils.loadAnimation;
-
 import org.czocher.forest.MainGame;
 import org.czocher.forest.entities.Player;
 import org.czocher.forest.utils.OrthogonalTiledMapEntityRenderer;
+import org.czocher.forest.utils.Utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -27,7 +26,8 @@ public class GameScreen implements Screen, InputProcessor {
 		this.game = game;
 		this.camera = game.getCamera();
 
-		player = new Player(loadAnimation("cat.png", 32, 32), this);
+		player = new Player(Utils.loadAnimation("cat.png", 32, 32), this);
+		player.setPosition(100, 100);
 
 		tiledMap = new TmxMapLoader().load("map.tmx");
 		tiledMapRenderer = new OrthogonalTiledMapEntityRenderer(tiledMap);
@@ -40,7 +40,6 @@ public class GameScreen implements Screen, InputProcessor {
 	public void dispose() {
 		tiledMap.dispose();
 		game.dispose();
-		player.dispose();
 	}
 
 	@Override
@@ -63,8 +62,8 @@ public class GameScreen implements Screen, InputProcessor {
 		tiledMapRenderer.setView(camera);
 		tiledMapRenderer.render();
 
-		game.getCamera().position.y = player.getPosition().y;
-		game.getCamera().position.x = player.getPosition().x;
+		game.getCamera().position.y = player.getY();
+		game.getCamera().position.x = player.getX();
 	}
 
 	@Override
