@@ -12,11 +12,16 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 
 public class Player extends AnimatedEntity {
 
 	protected Map<String, Animation> animation;
 	private float stateTime;
+	protected Vector2 velocity;
+	protected Vector2 maxvelocity;
+	protected Vector2 deceleration;
+	private float delta;
 
 	public Player(final TextureRegion[][] animationSheet, final GameScreen game) {
 		super(animationSheet, game);
@@ -33,26 +38,50 @@ public class Player extends AnimatedEntity {
 				put("moveUp", new Animation(0.20f, animationSheet[3]));
 			}
 		};
+		velocity = new Vector2();
+		maxvelocity = new Vector2(Constants.MAX_VELOCITY,
+				Constants.MAX_VELOCITY);
+		deceleration = new Vector2(Constants.DECELERATION_RATE,
+				Constants.DECELERATION_RATE);
 	}
 
 	@Override
 	public void draw(final Batch batch) {
-		stateTime += Gdx.graphics.getDeltaTime();
+		delta = Gdx.graphics.getDeltaTime();
+		stateTime += delta;
 
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
 			velocity.x = Utils.saturate(velocity.x, Constants.ACCLERATION_RATE,
 					-maxvelocity.x);
-		} else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+		} else if (velocity.x < 0) {
+			velocity.x = Utils.saturate(velocity.x,
+					Constants.DECELERATION_RATE, 0);
+		}
+
+		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
 			velocity.x = Utils.saturate(velocity.x, Constants.ACCLERATION_RATE,
 					maxvelocity.x);
+		} else if (velocity.x > 0) {
+			velocity.x = Utils.saturate(velocity.x,
+					Constants.DECELERATION_RATE, 0);
 		}
+
 		if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
 			velocity.y = Utils.saturate(velocity.y, Constants.ACCLERATION_RATE,
 					-maxvelocity.y);
-		} else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+		} else if (velocity.y < 0) {
+			velocity.y = Utils.saturate(velocity.y,
+					Constants.DECELERATION_RATE, 0);
+		}
+
+		if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
 			velocity.y = Utils.saturate(velocity.y, Constants.ACCLERATION_RATE,
 					maxvelocity.y);
+		} else if (velocity.y > 0) {
+			velocity.y = Utils.saturate(velocity.y,
+					Constants.DECELERATION_RATE, 0);
 		}
+
 		if (velocity.x > 0 || velocity.y > 0) {
 			if (velocity.x > velocity.y) {
 				setRegion(animation.get("moveRight").getKeyFrame(stateTime,
@@ -69,6 +98,8 @@ public class Player extends AnimatedEntity {
 						.getKeyFrame(stateTime, true));
 			}
 		}
+
+		setPosition(getX() + velocity.x * delta, getY() + velocity.y * delta);
 
 		super.draw(batch);
 	}

@@ -4,7 +4,7 @@ import org.czocher.forest.screens.GameScreen;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-public class AnimatedEntity extends MovableEntity {
+public class AnimatedEntity extends Entity {
 
 	protected TextureRegion[][] animationSheet;
 
