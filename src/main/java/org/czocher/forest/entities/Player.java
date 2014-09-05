@@ -54,33 +54,31 @@ public class Player extends AnimatedEntity {
 			velocity.x = Utils.saturate(velocity.x, Constants.ACCLERATION_RATE,
 					-maxvelocity.x);
 		} else if (velocity.x < 0) {
-			velocity.x = Utils.saturate(velocity.x,
-					Constants.DECELERATION_RATE, 0);
+			velocity.x = Utils.dampen(velocity.x, Constants.DECELERATION_RATE);
 		}
 
 		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
 			velocity.x = Utils.saturate(velocity.x, Constants.ACCLERATION_RATE,
 					maxvelocity.x);
 		} else if (velocity.x > 0) {
-			velocity.x = Utils.saturate(velocity.x,
-					Constants.DECELERATION_RATE, 0);
+			velocity.x = Utils.dampen(velocity.x, -Constants.DECELERATION_RATE);
 		}
 
 		if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
 			velocity.y = Utils.saturate(velocity.y, Constants.ACCLERATION_RATE,
 					-maxvelocity.y);
 		} else if (velocity.y < 0) {
-			velocity.y = Utils.saturate(velocity.y,
-					Constants.DECELERATION_RATE, 0);
+			velocity.y = Utils.dampen(velocity.y, Constants.DECELERATION_RATE);
 		}
 
 		if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
 			velocity.y = Utils.saturate(velocity.y, Constants.ACCLERATION_RATE,
 					maxvelocity.y);
 		} else if (velocity.y > 0) {
-			velocity.y = Utils.saturate(velocity.y,
-					Constants.DECELERATION_RATE, 0);
+			velocity.y = Utils.dampen(velocity.y, -Constants.DECELERATION_RATE);
 		}
+
+		System.out.println(velocity);
 
 		if (velocity.x > 0 || velocity.y > 0) {
 			if (velocity.x > velocity.y) {

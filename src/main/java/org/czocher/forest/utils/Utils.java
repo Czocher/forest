@@ -28,6 +28,21 @@ public class Utils {
 				return bound;
 			}
 		}
+	}
+
+	public static float dampen(float what, final float bywhat) {
+
+		what += bywhat * Gdx.graphics.getDeltaTime();
+
+		if (what < 0 && bywhat < 0) {
+			return 0;
+		}
+
+		if (what > 0 && bywhat > 0) {
+			return 0;
+		}
+
+		return what;
 
 	}
 }
