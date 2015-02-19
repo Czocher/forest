@@ -1,16 +1,22 @@
 package org.czocher.forest;
 
-import org.czocher.forest.screens.MenuScreen;
-
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
+import lombok.Getter;
+import lombok.Setter;
+import org.czocher.forest.screens.MenuScreen;
 
 public class MainGame extends Game {
 
-	private ScreenViewport viewport;
-	private OrthographicCamera camera;
+    @Getter
+    @Setter
+    private Viewport viewport;
+    @Getter
+    @Setter
+    private OrthographicCamera camera;
 
 	@Override
 	public void create() {
@@ -24,26 +30,4 @@ public class MainGame extends Game {
 		this.viewport.update();
 		this.setScreen(new MenuScreen(this));
 	}
-
-	@Override
-	public void render() {
-		super.render();
-	}
-
-	public ScreenViewport getViewport() {
-		return viewport;
-	}
-
-	public void setViewport(final ScreenViewport viewport) {
-		this.viewport = viewport;
-	}
-
-	public OrthographicCamera getCamera() {
-		return camera;
-	}
-
-	public void setCamera(final OrthographicCamera camera) {
-		this.camera = camera;
-	}
-
 }

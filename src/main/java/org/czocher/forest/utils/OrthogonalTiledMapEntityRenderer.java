@@ -1,52 +1,67 @@
 package org.czocher.forest.utils;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.czocher.forest.entities.Entity;
-
+import com.artemis.ComponentMapper;
+import com.artemis.Entity;
+import com.artemis.World;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import lombok.Getter;
+import org.czocher.forest.componenets.Graphics;
+import org.czocher.forest.componenets.Position;
 
-public class OrthogonalTiledMapEntityRenderer extends
-OrthogonalTiledMapRenderer {
+import java.util.ArrayList;
+import java.util.List;
 
-	private final List<Entity> entities;
-	private final int drawSpritesAfterLayer = 4;
+public class OrthogonalTiledMapEntityRenderer extends OrthogonalTiledMapRenderer {
 
-	public OrthogonalTiledMapEntityRenderer(final TiledMap map) {
-		super(map);
-		entities = new ArrayList<Entity>();
-	}
+    @Getter
+    private final List<Entity> entities;
+    private final int drawSpritesAfterLayer = 4;
+    private final ComponentMapper<Graphics> graphicMapper;
+    private final ComponentMapper<Position> positionMapper;
 
-	public void addEntity(final Entity entity) {
-		entities.add(entity);
-	}
+    public OrthogonalTiledMapEntityRenderer(TiledMap map, World world) {
+        super(map);
+        entities = new ArrayList<>();
+        positionMapper = world.getMapper(Position.class);
+        graphicMapper = world.getMapper(Graphics.class);
+    }
 
-	@Override
-	public void render() {
-		beginRender();
-		int currentLayer = 0;
-		for (final MapLayer layer : map.getLayers()) {
-			if (layer.isVisible()) {
-				if (layer instanceof TiledMapTileLayer) {
-					renderTileLayer((TiledMapTileLayer) layer);
-					currentLayer++;
-					if (currentLayer == drawSpritesAfterLayer) {
-						for (final Entity entity : entities) {
-							entity.draw(this.getSpriteBatch());
-						}
-					}
-				} else {
-					for (final MapObject object : layer.getObjects()) {
-						renderObject(object);
-					}
-				}
-			}
-		}
-		endRender();
-	}
+    public void addEntity(Entity entity) {
+        entities.add(entity);
+    }
+
+    public void removeEntity(Entity e) {
+        entities.remove(e);
+    }
+
+    @Override
+    public void render() {
+
+        beginRender();
+        int currentLayer = 0;
+        for (final MapLayer layer : map.getLayers()) {
+            if (layer.isVisible()) {
+                if (layer instanceof TiledMapTileLayer) {
+                    renderTileLayer((TiledMapTileLayer) layer);
+                    currentLayer++;
+                    if (currentLayer == drawSpritesAfterLayer) {
+                        for (final Entity entity : entities) {
+                            spriteBatch.draw(graphicMapper.get(entity).getTextureRegion(),
+                                    positionMapper.get(entity).getX(), positionMapper.get(entity).getY());
+                        }
+                    }
+                } else {
+                    for (final MapObject object : layer.getObjects()) {
+                        renderObject(object);
+                    }
+                }
+            }
+        }
+        endRender();
+    }
+
 }

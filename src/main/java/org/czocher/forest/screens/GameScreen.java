@@ -1,138 +1,65 @@
 package org.czocher.forest.screens;
 
-import org.czocher.forest.MainGame;
-import org.czocher.forest.entities.Player;
-import org.czocher.forest.utils.OrthogonalTiledMapEntityRenderer;
-import org.czocher.forest.utils.Utils;
-
+import com.artemis.World;
+import com.artemis.utils.EntityBuilder;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import org.czocher.forest.MainGame;
+import org.czocher.forest.componenets.*;
+import org.czocher.forest.managers.MapEntityManager;
+import org.czocher.forest.systems.*;
+import org.czocher.forest.utils.Utils;
 
-public class GameScreen implements Screen, InputProcessor {
+public class GameScreen extends ScreenAdapter {
 
-	private final MainGame game;
-	private final TiledMap tiledMap;
-	private final OrthogonalTiledMapEntityRenderer tiledMapRenderer;
-	private final OrthographicCamera camera;
-	private final Player player;
+    private final MainGame game;
+    private final World world;
 
-	public GameScreen(final MainGame game) {
-		this.game = game;
-		this.camera = game.getCamera();
+    public GameScreen(final MainGame game) {
+        this.game = game;
+        OrthographicCamera camera = game.getCamera();
+        this.world = new World();
 
-		player = new Player(Utils.loadAnimation("cat.png", 32, 32), this);
-		player.setPosition(100, 100);
+        MovementSystem ms = new MovementSystem(this.world);
+        MovementAnimationSystem mas = new MovementAnimationSystem(this.world);
+        RenderingSystem rs = new RenderingSystem(this.world, camera);
+        CameraPositioningSystem cps = new CameraPositioningSystem(this.world, camera);
+        PlayerControlSystem pcs = new PlayerControlSystem(this.world);
 
-		tiledMap = new TmxMapLoader().load("map.tmx");
-		tiledMapRenderer = new OrthogonalTiledMapEntityRenderer(tiledMap);
-		tiledMapRenderer.addEntity(player);
+        MapEntityManager mem = new MapEntityManager(rs);
 
-		Gdx.input.setInputProcessor(this);
-	}
+        this.world.setSystem(ms);
+        this.world.setSystem(mas);
+        this.world.setSystem(rs);
+        this.world.setSystem(cps);
+        this.world.setSystem(pcs);
+        this.world.setManager(mem);
+        this.world.initialize();
 
-	@Override
-	public void dispose() {
-		tiledMap.dispose();
-		game.dispose();
-	}
+        TextureRegion[][] playerAnimation = Utils.loadAnimation("cat.png", 32, 32);
+        new EntityBuilder(world).with(new Position(0, 0), new Velocity(0, 0), new Graphics(playerAnimation[0][0]),
+                new Animation(playerAnimation), new Control()).build();
+    }
 
-	@Override
-	public void hide() {
-		// TODO Auto-generated method stub
-	}
+    @Override
+    public void dispose() {
+        game.dispose();
+    }
 
-	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
-	}
+    @Override
+    public void render(final float delta) {
+        Gdx.gl.glClearColor(0, 0, 0, 0);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        game.getViewport().update();
+        this.world.setDelta(delta);
+        this.world.process();
+    }
 
-	@Override
-	public void render(final float delta) {
-		Gdx.gl.glClearColor(0, 0, 0, 0);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-		game.getViewport().update();
-
-		tiledMapRenderer.setView(camera);
-		tiledMapRenderer.render();
-
-		game.getCamera().position.y = player.getY();
-		game.getCamera().position.x = player.getX();
-	}
-
-	@Override
-	public void resize(final int width, final int height) {
-		game.getViewport().update(width, height);
-	}
-
-	@Override
-	public void resume() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void show() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public boolean keyDown(final int keycode) {
-		return false;
-
-	}
-
-	@Override
-	public boolean keyTyped(final char arg0) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean keyUp(final int arg0) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean mouseMoved(final int arg0, final int arg1) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean scrolled(final int arg0) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean touchDown(final int arg0, final int arg1, final int arg2,
-			final int arg3) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean touchDragged(final int arg0, final int arg1, final int arg2) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean touchUp(final int arg0, final int arg1, final int arg2,
-			final int arg3) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public Camera getCamera() {
-		return camera;
-	}
-
+    @Override
+    public void resize(final int width, final int height) {
+        game.getViewport().update(width, height);
+    }
 }
