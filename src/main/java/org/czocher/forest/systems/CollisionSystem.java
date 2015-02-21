@@ -70,7 +70,7 @@ public class CollisionSystem extends EntityProcessingSystem {
                 if (wy > hx) {
                     if (wy > -hx) {
                         // Top
-                        positionMapper.get(entity).setY(object.getY() + body.height);
+                        positionMapper.get(entity).setY(object.getY() + object.height);
                     } else {
                         // Left
                         positionMapper.get(entity).setX(object.getX() - body.width);
@@ -81,7 +81,7 @@ public class CollisionSystem extends EntityProcessingSystem {
                         positionMapper.get(entity).setX(object.getX() + object.width);
                     } else {
                         // Bottom
-                        positionMapper.get(entity).setY(object.getY() - object.height);
+                        positionMapper.get(entity).setY(object.getY() - body.height);
                     }
                 }
 
