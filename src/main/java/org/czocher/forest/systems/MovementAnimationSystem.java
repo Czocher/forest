@@ -6,31 +6,34 @@ import com.artemis.Entity;
 import com.artemis.World;
 import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.Gdx;
-import org.czocher.forest.componenets.Animation;
+import org.czocher.forest.componenets.Animations;
 import org.czocher.forest.componenets.Graphics;
 import org.czocher.forest.componenets.Position;
 import org.czocher.forest.componenets.Velocity;
 
 public class MovementAnimationSystem extends EntityProcessingSystem {
 
-    private final ComponentMapper<Animation> animationMapper;
+    private final ComponentMapper<Animations> animationMapper;
     private final ComponentMapper<Velocity> velocityMapper;
     private final ComponentMapper<Graphics> graphicsMapper;
     private float stateTime;
+    private float velocityX;
+    private float velocityY;
+    private float delta;
 
     public MovementAnimationSystem(World world) {
-        super(Aspect.getAspectForAll(Animation.class, Position.class, Velocity.class, Graphics.class));
-        this.animationMapper = world.getMapper(Animation.class);
-        this.velocityMapper = world.getMapper(Velocity.class);
-        this.graphicsMapper = world.getMapper(Graphics.class);
+        super(Aspect.getAspectForAll(Animations.class, Position.class, Velocity.class, Graphics.class));
+        animationMapper = world.getMapper(Animations.class);
+        velocityMapper = world.getMapper(Velocity.class);
+        graphicsMapper = world.getMapper(Graphics.class);
     }
 
     @Override
     protected void process(Entity entity) {
-        float velocityX = velocityMapper.get(entity).getX();
-        float velocityY = velocityMapper.get(entity).getY();
+        velocityX = velocityMapper.get(entity).getX();
+        velocityY = velocityMapper.get(entity).getY();
 
-        float delta = Gdx.graphics.getDeltaTime();
+        delta = Gdx.graphics.getDeltaTime();
         stateTime += delta;
 
         if (velocityX > 0 || velocityY > 0) {
@@ -49,4 +52,3 @@ public class MovementAnimationSystem extends EntityProcessingSystem {
 
     }
 }
-

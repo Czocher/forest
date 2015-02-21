@@ -17,7 +17,7 @@ public class CameraPositioningSystem extends EntityProcessingSystem {
     public CameraPositioningSystem(World world, Camera camera) {
         super(Aspect.getAspectForAll(Control.class, Position.class));
         this.camera = camera;
-        this.positionMapper = world.getMapper(Position.class);
+        positionMapper = world.getMapper(Position.class);
     }
 
     @Override

@@ -3,6 +3,7 @@ package org.czocher.forest.utils;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.World;
+import com.artemis.utils.Bag;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -12,20 +13,17 @@ import lombok.Getter;
 import org.czocher.forest.componenets.Graphics;
 import org.czocher.forest.componenets.Position;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class OrthogonalTiledMapEntityRenderer extends OrthogonalTiledMapRenderer {
+public class MapRenderer extends OrthogonalTiledMapRenderer {
 
     @Getter
-    private final List<Entity> entities;
+    private final Bag<Entity> entities;
     private final int drawSpritesAfterLayer = 4;
     private final ComponentMapper<Graphics> graphicMapper;
     private final ComponentMapper<Position> positionMapper;
 
-    public OrthogonalTiledMapEntityRenderer(TiledMap map, World world) {
+    public MapRenderer(TiledMap map, World world) {
         super(map);
-        entities = new ArrayList<>();
+        entities = new Bag<>();
         positionMapper = world.getMapper(Position.class);
         graphicMapper = world.getMapper(Graphics.class);
     }

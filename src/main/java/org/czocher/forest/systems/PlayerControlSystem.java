@@ -17,7 +17,6 @@ public class PlayerControlSystem extends EntityProcessingSystem {
 
     private final ComponentMapper<Position> positionMapper;
     private final ComponentMapper<Velocity> velocityMapper;
-    private float delta;
     private float velocityX;
     private float velocityY;
 
@@ -29,7 +28,6 @@ public class PlayerControlSystem extends EntityProcessingSystem {
 
     @Override
     protected void process(Entity entity) {
-        delta = Gdx.graphics.getDeltaTime();
         velocityX = velocityMapper.get(entity).getX();
         velocityY = velocityMapper.get(entity).getY();
 

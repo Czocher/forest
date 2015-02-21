@@ -14,7 +14,7 @@ public class MenuScreen extends ScreenAdapter {
     private final BitmapFont font;
     private final MainGame game;
 
-    public MenuScreen(final MainGame game) {
+    public MenuScreen(MainGame game) {
         this.game = game;
 
         batch = new SpriteBatch();
@@ -23,7 +23,7 @@ public class MenuScreen extends ScreenAdapter {
     }
 
     @Override
-    public void render(final float delta) {
+    public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -47,7 +47,7 @@ public class MenuScreen extends ScreenAdapter {
     }
 
     @Override
-    public void resize(final int width, final int height) {
+    public void resize(int width, int height) {
         game.getViewport().update(width, height);
     }
 

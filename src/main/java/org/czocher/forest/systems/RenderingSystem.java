@@ -6,17 +6,18 @@ import com.artemis.systems.VoidEntitySystem;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import org.czocher.forest.utils.OrthogonalTiledMapEntityRenderer;
+import org.czocher.forest.utils.MapRenderer;
 
 public class RenderingSystem extends VoidEntitySystem {
 
-    private final OrthogonalTiledMapEntityRenderer tiledMapRenderer;
+    private final MapRenderer tiledMapRenderer;
     private final OrthographicCamera camera;
+    private final TiledMap tiledMap;
 
     public RenderingSystem(World world, OrthographicCamera camera) {
         this.camera = camera;
-        TiledMap tiledMap = new TmxMapLoader().load("map.tmx");
-        tiledMapRenderer = new OrthogonalTiledMapEntityRenderer(tiledMap, world);
+        tiledMap = new TmxMapLoader().load("map.tmx");
+        tiledMapRenderer = new MapRenderer(tiledMap, world);
     }
 
     @Override
@@ -31,5 +32,11 @@ public class RenderingSystem extends VoidEntitySystem {
 
     public void removeEntity(Entity e) {
         tiledMapRenderer.removeEntity(e);
+    }
+
+    @Override
+    protected void dispose() {
+        tiledMap.dispose();
+        super.dispose();
     }
 }

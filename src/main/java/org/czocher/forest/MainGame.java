@@ -23,11 +23,11 @@ public class MainGame extends Game {
 		final float w = Gdx.graphics.getWidth();
 		final float h = Gdx.graphics.getHeight();
 
-		this.camera = new OrthographicCamera();
-		this.camera.setToOrtho(false, w, h);
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, w, h);
 
-		this.viewport = new ScreenViewport(camera);
-		this.viewport.update();
-		this.setScreen(new MenuScreen(this));
-	}
+        viewport = new ScreenViewport(camera);
+        viewport.update();
+        setScreen(new MenuScreen(this));
+    }
 }
