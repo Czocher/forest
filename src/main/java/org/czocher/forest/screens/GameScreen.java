@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import org.czocher.forest.MainGame;
 import org.czocher.forest.componenets.*;
 import org.czocher.forest.managers.MapEntityManager;
@@ -26,10 +27,11 @@ public class GameScreen extends ScreenAdapter {
         fpsLogger = new FPSLogger();
 
         OrthographicCamera camera = game.getCamera();
+        TiledMap map = game.getMap();
 
-        MovementSystem ms = new MovementSystem(world);
+        MovementSystem ms = new MovementSystem(world, map);
         MovementAnimationSystem mas = new MovementAnimationSystem(world);
-        RenderingSystem rs = new RenderingSystem(world, camera);
+        RenderingSystem rs = new RenderingSystem(world, camera, map);
         CameraPositioningSystem cps = new CameraPositioningSystem(world, camera);
         PlayerControlSystem pcs = new PlayerControlSystem(world);
 
