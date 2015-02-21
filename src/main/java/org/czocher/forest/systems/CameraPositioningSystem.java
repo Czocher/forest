@@ -3,7 +3,6 @@ package org.czocher.forest.systems;
 import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
-import com.artemis.World;
 import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.graphics.Camera;
 import org.czocher.forest.componenets.Control;
@@ -12,12 +11,17 @@ import org.czocher.forest.utils.Constants;
 
 public class CameraPositioningSystem extends EntityProcessingSystem {
 
-    private final ComponentMapper<Position> positionMapper;
     private final Camera camera;
+    private ComponentMapper<Position> positionMapper;
 
-    public CameraPositioningSystem(World world, Camera camera) {
+    public CameraPositioningSystem(Camera camera) {
         super(Aspect.getAspectForAll(Control.class, Position.class));
         this.camera = camera;
+    }
+
+    @Override
+    protected void initialize() {
+        super.initialize();
         positionMapper = world.getMapper(Position.class);
     }
 
@@ -34,12 +38,12 @@ public class CameraPositioningSystem extends EntityProcessingSystem {
             camera.position.y = camera.viewportHeight / 2;
         }
 
-        if (camera.position.x > Constants.MAP_WIDTH - camera.viewportWidth / 2 + Constants.TILE_SIZE) {
-            camera.position.x = Constants.MAP_WIDTH - camera.viewportWidth / 2 + Constants.TILE_SIZE;
+        if (camera.position.x > Constants.MAP_WIDTH - camera.viewportWidth / 2) {
+            camera.position.x = Constants.MAP_WIDTH - camera.viewportWidth / 2;
         }
 
-        if (camera.position.y > Constants.MAP_HEIGHT - camera.viewportHeight / 2 + Constants.TILE_SIZE) {
-            camera.position.y = Constants.MAP_HEIGHT - camera.viewportHeight / 2 + Constants.TILE_SIZE;
+        if (camera.position.y > Constants.MAP_HEIGHT - camera.viewportHeight / 2) {
+            camera.position.y = Constants.MAP_HEIGHT - camera.viewportHeight / 2;
         }
     }
 }

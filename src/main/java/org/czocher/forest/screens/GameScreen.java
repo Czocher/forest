@@ -29,15 +29,19 @@ public class GameScreen extends ScreenAdapter {
         OrthographicCamera camera = game.getCamera();
         TiledMap map = game.getMap();
 
-        MovementSystem ms = new MovementSystem(world, map);
-        MovementAnimationSystem mas = new MovementAnimationSystem(world);
-        RenderingSystem rs = new RenderingSystem(world, camera, map);
-        CameraPositioningSystem cps = new CameraPositioningSystem(world, camera);
-        PlayerControlSystem pcs = new PlayerControlSystem(world);
+        MovementSystem ms = new MovementSystem();
+        MapBoundsSystem mbs = new MapBoundsSystem();
+        CollisionSystem cs = new CollisionSystem(map);
+        MovementAnimationSystem mas = new MovementAnimationSystem();
+        RenderingSystem rs = new RenderingSystem(camera, map);
+        CameraPositioningSystem cps = new CameraPositioningSystem(camera);
+        PlayerControlSystem pcs = new PlayerControlSystem();
 
         MapEntityManager mem = new MapEntityManager(rs);
 
         world.setSystem(ms);
+        world.setSystem(mbs);
+        world.setSystem(cs);
         world.setSystem(mas);
         world.setSystem(rs);
         world.setSystem(cps);
@@ -46,7 +50,7 @@ public class GameScreen extends ScreenAdapter {
         world.initialize();
 
         TextureRegion[][] playerAnimationSheet = Utils.loadAnimationSheet("cat.png", 32, 32);
-        new EntityBuilder(world).with(new Position(0, 0), new Velocity(0, 0), new Graphics(playerAnimationSheet[0][0]),
+        new EntityBuilder(world).with(new CollisionBody(32, 32), new Position(0, 0), new Velocity(0, 0), new Graphics(playerAnimationSheet[0][0]),
                 new Animations(playerAnimationSheet, 0.20f), new Control()).build();
     }
 

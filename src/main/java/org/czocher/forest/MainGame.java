@@ -41,8 +41,8 @@ public class MainGame extends Game {
     private void fillMap() {
         map = new TmxMapLoader().load("map.tmx");
         Constants.TILE_SIZE = map.getProperties().get("tilewidth", Integer.class);
-        Constants.MAP_WIDTH = map.getProperties().get("width", Integer.class) * Constants.TILE_SIZE - Constants.TILE_SIZE;
-        Constants.MAP_HEIGHT = map.getProperties().get("height", Integer.class) * Constants.TILE_SIZE - Constants.TILE_SIZE;
+        Constants.MAP_WIDTH = map.getProperties().get("width", Integer.class) * Constants.TILE_SIZE;
+        Constants.MAP_HEIGHT = map.getProperties().get("height", Integer.class) * Constants.TILE_SIZE;
     }
 
     @Override

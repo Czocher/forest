@@ -3,7 +3,6 @@ package org.czocher.forest.systems;
 import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
-import com.artemis.World;
 import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -15,13 +14,18 @@ import org.czocher.forest.utils.Utils;
 
 public class PlayerControlSystem extends EntityProcessingSystem {
 
-    private final ComponentMapper<Position> positionMapper;
-    private final ComponentMapper<Velocity> velocityMapper;
+    private ComponentMapper<Position> positionMapper;
+    private ComponentMapper<Velocity> velocityMapper;
     private float velocityX;
     private float velocityY;
 
-    public PlayerControlSystem(World world) {
+    public PlayerControlSystem() {
         super(Aspect.getAspectForAll(Control.class, Velocity.class));
+    }
+
+    @Override
+    protected void initialize() {
+        super.initialize();
         positionMapper = world.getMapper(Position.class);
         velocityMapper = world.getMapper(Velocity.class);
     }

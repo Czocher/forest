@@ -3,7 +3,6 @@ package org.czocher.forest.systems;
 import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
-import com.artemis.World;
 import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.Gdx;
 import org.czocher.forest.componenets.Animations;
@@ -13,16 +12,21 @@ import org.czocher.forest.componenets.Velocity;
 
 public class MovementAnimationSystem extends EntityProcessingSystem {
 
-    private final ComponentMapper<Animations> animationMapper;
-    private final ComponentMapper<Velocity> velocityMapper;
-    private final ComponentMapper<Graphics> graphicsMapper;
+    private ComponentMapper<Animations> animationMapper;
+    private ComponentMapper<Velocity> velocityMapper;
+    private ComponentMapper<Graphics> graphicsMapper;
     private float stateTime;
     private float velocityX;
     private float velocityY;
     private float delta;
 
-    public MovementAnimationSystem(World world) {
+    public MovementAnimationSystem() {
         super(Aspect.getAspectForAll(Animations.class, Position.class, Velocity.class, Graphics.class));
+    }
+
+    @Override
+    protected void initialize() {
+        super.initialize();
         animationMapper = world.getMapper(Animations.class);
         velocityMapper = world.getMapper(Velocity.class);
         graphicsMapper = world.getMapper(Graphics.class);

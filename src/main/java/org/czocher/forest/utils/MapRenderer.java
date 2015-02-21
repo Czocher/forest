@@ -17,7 +17,6 @@ public class MapRenderer extends OrthogonalTiledMapRenderer {
 
     @Getter
     private final Bag<Entity> entities;
-    private final int drawSpritesAfterLayer = 4;
     private final ComponentMapper<Graphics> graphicMapper;
     private final ComponentMapper<Position> positionMapper;
 
@@ -40,13 +39,11 @@ public class MapRenderer extends OrthogonalTiledMapRenderer {
     public void render() {
 
         beginRender();
-        int currentLayer = 0;
         for (final MapLayer layer : map.getLayers()) {
             if (layer.isVisible()) {
                 if (layer instanceof TiledMapTileLayer) {
                     renderTileLayer((TiledMapTileLayer) layer);
-                    currentLayer++;
-                    if (currentLayer == drawSpritesAfterLayer) {
+                    if ("players".equals(layer.getName())) {
                         for (final Entity entity : entities) {
                             spriteBatch.draw(graphicMapper.get(entity).getTextureRegion(),
                                     positionMapper.get(entity).getX(), positionMapper.get(entity).getY());
